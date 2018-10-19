@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +19,7 @@ import { AddAddressComponent } from './add-address/add-address.component';
     AddAddressComponent
   ],
   imports: [
+    ModalModule.forRoot(),
     CollapseModule.forRoot(),
     BrowserModule,
     AppRoutingModule
