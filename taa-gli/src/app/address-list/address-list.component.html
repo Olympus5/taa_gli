@@ -1,0 +1,37 @@
+<div class="d-flex mt-md-5 mt-3 mb-3 mx-2 justify-content-between">
+	<h2 >Addresses </h2>
+	<div>
+		<button class="btn btn-outline-secondary">Add address</button>
+		<span><button class="btn btn-outline-danger">Delete all</button></span>
+	</div>
+</div>
+
+<div class="table-responsive container-fluid">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Building</th>
+				<th>Street name</th>
+				<th>Street number</th>
+				<th>Zip Code</th>
+				<th>City</th>
+				<th>Country</th>
+				<th>Formatted address</th>
+				<th></th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr *ngFor="let address of addresses">
+				<td>{{address.building}}</td>
+				<td>{{address.streetName}}</td>
+				<td>{{address.streetNumber}}</td>
+				<td>{{address.zipCode}}</td>
+				<td>{{address.city}}</td>
+				<td>{{address.country}}</td>
+				<td>{{address.formattedAddress}}</td>
+				<td><button class="btn btn-danger">Delete</button></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
