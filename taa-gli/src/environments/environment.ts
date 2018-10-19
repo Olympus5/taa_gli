@@ -5,4 +5,12 @@
 
 export const environment = {
   production: false
+  firebase: {
+    apiKey: "AIzaSyChjI6PZEmsAIt_5gAH0G2yuCMd8OtIU_o",
+    authDomain: "taa-gli.firebaseapp.com",
+    databaseURL: "https://taa-gli.firebaseio.com",
+    projectId: "taa-gli",
+    storageBucket: "taa-gli.appspot.com",
+    messagingSenderId: "722953440543"
+  }
 };
