@@ -20,7 +20,7 @@ export class AddressListComponent implements OnInit {
   }
 
   openModal() {
-  	this.bsModalRef = this.modalService.show(AddAddressComponent, {});
+  	this.bsModalRef = this.modalService.show(AddAddressComponent, {class: 'modal-lg'});
   }
 
   toggleUpdate() {
