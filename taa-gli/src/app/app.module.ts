@@ -12,7 +12,6 @@ import { AddressListComponent } from './address-list/address-list.component';
 import { MapsComponent } from './maps/maps.component';
 import { AddAddressComponent } from './add-address/add-address.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

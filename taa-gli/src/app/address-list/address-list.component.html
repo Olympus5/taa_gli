@@ -13,7 +13,7 @@
 
 	  <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic">
 	    <li role="menuitem"><button type="button" class="dropdown-item" (click)="openModal()">Add address</button></li>
-		<li role="menuitem"><button type="button" class="dropdown-item" [disabled]="disabledUpdate">Update</button></li>
+		<li role="menuitem"><button type="button" class="dropdown-item" [disabled]="disabledUpdate">Update all</button></li>
 		<li role="menuitem"><button class="dropdown-item">Delete all</button></li>
 	  </ul>
 	</div>
@@ -36,7 +36,7 @@
 
 		<tbody>
 			<tr *ngFor="let address of addresses">
-				<td><input type="text" [(ngModel)]="address.enterprise" class="form-control" (keyup)="disabledUpdate=false"></td>
+				<td><input type="text" [(ngModel)]="address.enterprise" class="form-control" (keyup)="onUpdate()"></td>
 				<td>{{address.streetName}}</td>
 				<td>{{address.streetNumber}}</td>
 				<td>{{address.zipCode}}</td>

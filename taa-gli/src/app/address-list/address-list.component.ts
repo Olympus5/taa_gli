@@ -1,29 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { ADDRESSES } from '../addresses-mock';
+
+import { Address } from '../address';
 import { AddAddressComponent } from '../add-address/add-address.component';
+import { AddressService } from '../address.service';
 
 @Component({
-  selector: 'app-address-list',
-  templateUrl: './address-list.component.html',
-  styleUrls: ['./address-list.component.css']
+    selector: 'app-address-list',
+    templateUrl: './address-list.component.html',
+    styleUrls: ['./address-list.component.css']
 })
 export class AddressListComponent implements OnInit {
-	bsModalRef: BsModalRef;
-	addresses = ADDRESSES;
-  disabledUpdate: boolean = true;
+    bsModalRef: BsModalRef;
+    state: string[];
+    addresses: Address[];
+    disabledUpdate: boolean = false;
 
-  constructor(private modalService: BsModalService) { }
+    constructor(
+        private modalService: BsModalService,
+        private addressService: AddressService
+    ) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.getAddresses();
+    }
 
-  openModal() {
-  	this.bsModalRef = this.modalService.show(AddAddressComponent, {class: 'modal-lg'});
-  }
+    getAddresses() {
+        this.addressService.getAddresses()
+            .subscribe(addresses => {
+                this.addresses = addresses;
+                this.state = Array(addresses.length).fill(null)
+                this.addresses.map((value, index) => this.state[index] = value.enterprise);
+            });
+    }
 
-  toggleUpdate() {
-    this.disabledUpdate = !this.disabledUpdate;
-  }
+    openModal(): void {
+        this.bsModalRef = this.modalService.show(AddAddressComponent, {class: 'modal-lg'});
+    }
+
+    onUpdate(): void {
+        this.disabledUpdate = this.addresses.every((value, index) => value.enterprise === this.state[index]);
+    }
 }
