@@ -33,8 +33,7 @@ export class LoginComponent implements OnInit {
       {
         userName: this.model.username,
         password: this.model.password
-      },
-      this.httpOptions).subscribe(isValid => {
+      }, this.httpOptions).subscribe(isValid => {
       if (isValid) {
         sessionStorage.setItem(
           'token',
