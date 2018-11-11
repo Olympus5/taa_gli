@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-login',
@@ -12,9 +11,6 @@ export class LoginComponent implements OnInit {
 
   model: any = {};
   url: string = 'http://localhost:8080/login';
-  httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
-  };
 
   constructor(
     private route: ActivatedRoute,
@@ -28,21 +24,21 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.http.post<Observable<boolean>>(
-      this.url,
-      {
-        userName: this.model.username,
-        password: this.model.password
-      }, this.httpOptions).subscribe(isValid => {
-      if (isValid) {
-        sessionStorage.setItem(
-          'token',
-          btoa(this.model.username + ':' + this.model.password)
-        );
-        this.router.navigate(['']);
-      } else {
-        alert("Authentication failed.")
-      }
-    });
+
+    const user = new FormData();
+    user.append('username', this.model.username);
+    user.append('password', this.model.password);
+
+    this.http.post<boolean>(this.url, user)
+      .subscribe(isValid => {
+        if (isValid) {
+          sessionStorage.setItem(
+            'token',
+            btoa(this.model.username + ':' + this.model.password)
+          );
+        } else {
+          alert("Authentication failed.")
+        }
+      });
   }
 }
