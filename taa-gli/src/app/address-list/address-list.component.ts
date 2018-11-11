@@ -15,7 +15,7 @@ export class AddressListComponent implements OnInit {
     bsModalRef: BsModalRef;
     state: string[];
     addresses: Address[];
-    disabledUpdate: boolean = false;
+    disabledUpdate: boolean = true;
 
     constructor(
         private modalService: BsModalService,
@@ -40,6 +40,6 @@ export class AddressListComponent implements OnInit {
     }
 
     onUpdate(): void {
-        this.disabledUpdate = this.addresses.every((value, index) => value.enterprise === this.state[index]);
+        this.disabledUpdate = this.addresses.every((value, index) => value.enterprise.trim() === this.state[index].trim());
     }
 }

@@ -13,6 +13,7 @@ import {MapsComponent} from './maps/maps.component';
 import {AddAddressComponent} from './add-address/add-address.component';
 import {LoginComponent} from './login/login.component';
 import {HttpClientModule} from '@angular/common/http';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {HttpClientModule} from '@angular/common/http';
     AddressListComponent,
     MapsComponent,
     AddAddressComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent
   ],
   imports: [
     ModalModule.forRoot(),

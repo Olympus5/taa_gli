@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between mb-3">
+  <a routerLink="/" class="navbar-brand">{{ title }}</a>
+
+  <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" [attr.aria-expend]="!isCollapsed" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse justify-content-end" [collapse]="isCollapsed" id="navbarToggler">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="false">Addresses</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="false">Enterprises</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input type="search" class="form-control mr-sm-2" placeholder="Search an address" aria-label="Search an address">
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
