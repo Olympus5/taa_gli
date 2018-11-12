@@ -57,6 +57,16 @@ export class AddressService {
     );
   }
 
+  getAddressDeplacement(id: number): Observable<Address> {
+    const url = `${URLS.deplacementUrl}/${id}/address`;
+
+    return this.http.get<Address>(url)
+    .pipe(
+      tap(_ => `fetched address id=${id}`),
+      catchError(this.handleError<Address>())
+    );
+  }
+
   updateAddress(address: Address): Observable<any> {
     return this.http.put<any>(URLS.addressUrl, address, httpOptions)
     .pipe(

@@ -38,6 +38,16 @@ export class LocationService {
        );
    }
 
+   getLocationAddress(id: number): Observable<Location> {
+     const url = `${URLS.addressUrl}/${id}/location`;
+
+     return this.http.get<Location>(url)
+       .pipe(
+         tap(_ => `fetched location address id=${id}`),
+         catchError(this.handleError<Location>())
+       );
+   }
+
    addLocation(location: Location): Observable<Location> {
      return this.http.post<Location>(URLS.locationUrl, location, httpOptions)
        .pipe(

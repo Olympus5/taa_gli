@@ -28,6 +28,26 @@ export class AttachmentService {
         );
     }
 
+    getAttachmentsAddress(id: number): Observable<Attachment[]> {
+      const url = `${URLS.addressUrl}/${id}/attachments`;
+
+      return this.http.get<Attachment[]>(url)
+        .pipe(
+          tap(_ => `fetched attachments address id=${id}`),
+          catchError(this.handleError([]))
+        );
+    }
+
+    getAttachmentsEnterprise(id: number): Observable<Attachment[]> {
+      const url = `${URLS.enterpriseUrl}/${id}/attachments`;
+
+      return this.http.get<Attachment[]>(url)
+        .pipe(
+          tap(_ => `fetched attachments enterprise id=${id}`),
+          catchError(this.handleError([]))
+        );
+    }
+
     getAttachment(id: number): Observable<Attachment> {
       const url = `${URLS.attachmentUrl}/${id}`;
 

@@ -28,6 +28,16 @@ export class PhoneNumberService {
     );
   }
 
+  getPhoneNumbersEnterprise(id: number): Observable<PhoneNumber[]> {
+    const url = `${URLS.enterpriseUrl}/${id}/phoneNumbers`;
+
+    return this.http.get<PhoneNumber[]>(url)
+    .pipe(
+      tap(_ => `fetched phoneNumbers enterprise id=${id}`),
+      catchError(this.handleError([]))
+    );
+  }
+
   getPhoneNumber(id: number): Observable<PhoneNumber> {
     const url = `${URLS.phoneNumberUrl}/${id}`;
 

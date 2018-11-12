@@ -29,6 +29,16 @@ export class EmployeeService {
         );
     }
 
+    getEmployeesEnterprise(id: number): Observable<Employee[]> {
+      const url = `${URLS.enterpriseUrl}/${id}/employees`;
+
+      return this.http.get<Employee[]>(url)
+        .pipe(
+          tap(_ => `fetched employees enterprise id=${id}`),
+          catchError(this.handleError([]))
+        );
+    }
+
     getEmployee(id: number): Observable<Employee> {
       const url = `${URLS.employeeUrl}/${id}`;
 
@@ -38,6 +48,26 @@ export class EmployeeService {
           catchError(this.handleError<Employee>())
         );
     }
+
+    getEmployeeCar(id: number): Observable<Employee> {
+      const url = `${URLS.carUrl}/${id}/employee`;
+
+      return this.http.get<Employee>(url)
+        .pipe(
+          tap(_ => `fetched employee car id=${id}`),
+          catchError(this.handleError<Employee>())
+        );
+    }
+
+    getEmployeeDeplacement(id: number): Observable<Employee> {
+        const url = `${URLS.deplacementUrl}/${id}/employee`;
+
+        return this.http.get<Employee>(url)
+          .pipe(
+            tap(_ => `fetched employee deplacement id=${id}`),
+            catchError(this.handleError<Employee>())
+          );
+      }
 
     addEmployee(employee: Employee): Observable<Employee> {
       return this.http.post<Employee>(URLS.employeeUrl, employee, httpOptions)
