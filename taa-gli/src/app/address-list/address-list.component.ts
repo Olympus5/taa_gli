@@ -3,7 +3,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import { Address } from '../address';
-import { AddAddressComponent } from '../add-address/add-address.component';
+import { AddEnterpriseComponent } from '../add-enterprise/add-enterprise.component';
 import { AddressService } from '../address.service';
 
 @Component({
@@ -16,6 +16,7 @@ export class AddressListComponent implements OnInit {
     state: string[];
     addresses: Address[];
     disabledUpdate: boolean = true;
+    page = 0;
 
     constructor(
         private modalService: BsModalService,
@@ -27,19 +28,24 @@ export class AddressListComponent implements OnInit {
     }
 
     getAddresses() {
-        this.addressService.getAddresses()
+        this.addressService.getAddresses(this.page)
             .subscribe(addresses => {
                 this.addresses = addresses;
                 this.state = Array(addresses.length).fill(null)
-                this.addresses.map((value, index) => this.state[index] = value.enterprise);
+                this.addresses.map((value, index) => this.state[index] = value.label);
+                this.page++;
             });
     }
 
     openModal(): void {
-        this.bsModalRef = this.modalService.show(AddAddressComponent, {class: 'modal-lg'});
+        this.bsModalRef = this.modalService.show(AddEnterpriseComponent, {class: 'modal-lg'});
     }
 
     onUpdate(): void {
-        this.disabledUpdate = this.addresses.every((value, index) => value.enterprise.trim() === this.state[index].trim());
+        this.disabledUpdate = this.addresses.every((value, index) => value.label.trim() === this.state[index].trim());
+    }
+
+    onLoad(): void {
+        this.getAddresses();
     }
 }

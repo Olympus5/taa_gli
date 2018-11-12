@@ -10,7 +10,7 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AddressListComponent} from './address-list/address-list.component';
 import {MapsComponent} from './maps/maps.component';
-import {AddAddressComponent} from './add-address/add-address.component';
+import {AddEnterpriseComponent} from './add-enterprise/add-enterprise.component';
 import {LoginComponent} from './login/login.component';
 import {HttpClientModule} from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
@@ -20,7 +20,7 @@ import { HeaderComponent } from './header/header.component';
     AppComponent,
     AddressListComponent,
     MapsComponent,
-    AddAddressComponent,
+    AddEnterpriseComponent,
     LoginComponent,
     HeaderComponent
   ],
@@ -35,6 +35,6 @@ import { HeaderComponent } from './header/header.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [AddAddressComponent]
+  entryComponents: [AddEnterpriseComponent]
 })
 export class AppModule { }

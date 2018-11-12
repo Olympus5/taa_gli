@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-maps',
@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./maps.component.css']
 })
 export class MapsComponent implements OnInit {
+  mapUrl: string;
+  @Input() enterprise: string;
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  getMap() {
+
+  }
 }
