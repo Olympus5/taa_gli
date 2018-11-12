@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 
 import { Attachment } from './attachment';
+import { URLS } from './urls';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'applicationt/json' })
@@ -13,14 +14,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AttachmentService {
-    attachmentUrl = 'http://localhost:8080/attachment';
-
     constructor(
       private http: HttpClient
     ) { }
 
     getAttachments(page: number): Observable<Attachment[]> {
-      const url = `${this.attachmentUrl}/?page=${page}`;
+      const url = `${URLS.attachmentUrl}/?page=${page}`;
 
       return this.http.get<Attachment[]>(url)
         .pipe(
@@ -30,7 +29,7 @@ export class AttachmentService {
     }
 
     getAttachment(id: number): Observable<Attachment> {
-      const url = `${this.attachmentUrl}/${id}`;
+      const url = `${URLS.attachmentUrl}/${id}`;
 
       return this.http.get<Attachment>(url)
         .pipe(
@@ -40,7 +39,7 @@ export class AttachmentService {
     }
 
     addAttachment(attachment: Attachment): Observable<Attachment> {
-      return this.http.post<Attachment>(this.attachmentUrl, attachment, httpOptions)
+      return this.http.post<Attachment>(URLS.attachmentUrl, attachment, httpOptions)
         .pipe(
           tap(_ => console.log(`Added attachment w/ id=${attachment.id}`)),
           catchError(this.handleError<Attachment>())
@@ -48,7 +47,7 @@ export class AttachmentService {
     }
 
     updateAttachment(attachment: Attachment): Observable<any> {
-      return this.http.put<any>(this.attachmentUrl, attachment, httpOptions)
+      return this.http.put<any>(URLS.attachmentUrl, attachment, httpOptions)
         .pipe(
           tap(_ => console.log(`updated attachment id=${attachment.id}`)),
           catchError(this.handleError<any>())
@@ -57,7 +56,7 @@ export class AttachmentService {
 
     deleteAttachment(attachment: Attachment): Observable<Attachment> {
       const id = attachment.id;
-      const url = `${this.attachmentUrl}/${id}`;
+      const url = `${URLS.attachmentUrl}/${id}`;
 
       return this.http.delete<Attachment>(url, httpOptions)
         .pipe(

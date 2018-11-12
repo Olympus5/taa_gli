@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 
 import { Address } from './address';
 import { ADDRESSES } from './addresses-mock';
+import { URLS } from './urls';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,14 +15,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AddressService {
-  addressUrl: string = "http://localhost:8080/address";
-
   constructor(
     private http: HttpClient
   ) { }
 
   getAddresses(page: number): Observable<Address[]> {
-    const url = this.addressUrl + `/?page=${page}`;
+    const url = `${URLS.addressUrl}/?page=${page}`;
 
     return this.http.get<Address[]>(url)
     .pipe(
@@ -30,8 +29,18 @@ export class AddressService {
     );
   }
 
+  getAddressesEnterprise(id: number): Observable<Address[]> {
+    const url = `${URLS.enterpriseUrl}/${id}/addresses`;
+
+    return this.http.get<Address[]>(url)
+      .pipe(
+        tap(_ => console.log(`fetched addresses enterprise id=${id}`)),
+        catchError(this.handleError([]))
+      );
+  }
+
   addAddress(address: Address): Observable<Address> {
-    return this.http.post<Address>(this.addressUrl, address, httpOptions)
+    return this.http.post<Address>(URLS.addressUrl, address, httpOptions)
     .pipe(
       tap(_ => console.log(`Added address w/ id=${address.id}`)),
       catchError(this.handleError<Address>())
@@ -39,7 +48,7 @@ export class AddressService {
   }
 
   getAddress(id: number): Observable<Address> {
-    const url = `${this.addressUrl}/${id}`;
+    const url = `${URLS.addressUrl}/${id}`;
 
     return this.http.get<Address>(url)
     .pipe(
@@ -49,7 +58,7 @@ export class AddressService {
   }
 
   updateAddress(address: Address): Observable<any> {
-    return this.http.put<any>(this.addressUrl, address, httpOptions)
+    return this.http.put<any>(URLS.addressUrl, address, httpOptions)
     .pipe(
       tap(_ => console.log(`updated address id=${address.id}`)),
       catchError(this.handleError<any>())
@@ -58,7 +67,7 @@ export class AddressService {
 
   deleteAddress(address: Address): Observable<Address> {
     const id = address.id;
-    const url = `${this.addressUrl}/${id}`;
+    const url = `${URLS.addressUrl}/${id}`;
 
     return this.http.delete<Address>(url, httpOptions)
     .pipe(

@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 
 import { Enterprise } from './enterprise';
+import { URLS } from './urls';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'applicationt/json' })
@@ -13,15 +14,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class EnterpriseService {
-
-  enterpriseUrl = 'http://localhost:8080/enterprise';
-
   constructor(
     private http: HttpClient
   ) { }
 
   getEnterprises(page: number): Observable<Enterprise[]> {
-    const url = `${this.enterpriseUrl}/?page=${page}`;
+    const url = `${URLS.enterpriseUrl}/?page=${page}`;
 
     return this.http.get<Enterprise[]>(url)
       .pipe(
@@ -31,7 +29,7 @@ export class EnterpriseService {
   }
 
   getEnterprise(id: number): Observable<Enterprise> {
-    const url = `${this.enterpriseUrl}/${id}`;
+    const url = `${URLS.enterpriseUrl}/${id}`;
 
     return this.http.get<Enterprise>(url)
       .pipe(
@@ -41,7 +39,7 @@ export class EnterpriseService {
   }
 
   addEnterprise(enterprise: Enterprise): Observable<Enterprise> {
-    return this.http.post<Enterprise>(this.enterpriseUrl, enterprise, httpOptions)
+    return this.http.post<Enterprise>(URLS.enterpriseUrl, enterprise, httpOptions)
       .pipe(
         tap(_ => console.log(`Added enterprise w/ id=${enterprise.id}`)),
         catchError(this.handleError<Enterprise>())
@@ -49,7 +47,7 @@ export class EnterpriseService {
   }
 
   updateEnterprise(enterprise: Enterprise): Observable<any> {
-    return this.http.put<any>(this.enterpriseUrl, enterprise, httpOptions)
+    return this.http.put<any>(URLS.enterpriseUrl, enterprise, httpOptions)
       .pipe(
         tap(_ => console.log(`updated enterprise id=${enterprise.id}`)),
         catchError(this.handleError<any>())
@@ -58,7 +56,7 @@ export class EnterpriseService {
 
   deleteEnterprise(enterprise: Enterprise): Observable<Enterprise> {
     const id = enterprise.id;
-    const url = `${this.enterpriseUrl}/${id}`;
+    const url = `${URLS.enterpriseUrl}/${id}`;
 
     return this.http.delete<Enterprise>(url, httpOptions)
       .pipe(

@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 
 import { Deplacement } from './deplacement';
+import { URLS } from './urls';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'applicationt/json' })
@@ -13,14 +14,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class DeplacementService {
-    deplacementUrl = 'http://localhost:8080/deplacement';
-
     constructor(
       private http: HttpClient
     ) { }
 
     getDeplacements(page: number): Observable<Deplacement[]> {
-      const url = `${this.deplacementUrl}/?page=${page}`;
+      const url = `${URLS.deplacementUrl}/?page=${page}`;
 
       return this.http.get<Deplacement[]>(url)
         .pipe(
@@ -30,7 +29,7 @@ export class DeplacementService {
     }
 
     getDeplacement(id: number): Observable<Deplacement> {
-      const url = `${this.deplacementUrl}/${id}`;
+      const url = `${URLS.deplacementUrl}/${id}`;
 
       return this.http.get<Deplacement>(url)
         .pipe(
@@ -40,7 +39,7 @@ export class DeplacementService {
     }
 
     addDeplacement(deplacement: Deplacement): Observable<Deplacement> {
-      return this.http.post<Deplacement>(this.deplacementUrl, deplacement, httpOptions)
+      return this.http.post<Deplacement>(URLS.deplacementUrl, deplacement, httpOptions)
         .pipe(
           tap(_ => console.log(`Added deplacement w/ id=${deplacement.id}`)),
           catchError(this.handleError<Deplacement>())
@@ -48,7 +47,7 @@ export class DeplacementService {
     }
 
     updateDeplacement(deplacement: Deplacement): Observable<any> {
-      return this.http.put<any>(this.deplacementUrl, deplacement, httpOptions)
+      return this.http.put<any>(URLS.deplacementUrl, deplacement, httpOptions)
         .pipe(
           tap(_ => console.log(`updated deplacement id=${deplacement.id}`)),
           catchError(this.handleError<any>())
@@ -57,7 +56,7 @@ export class DeplacementService {
 
     deleteDeplacement(deplacement: Deplacement): Observable<Deplacement> {
       const id = deplacement.id;
-      const url = `${this.deplacementUrl}/${id}`;
+      const url = `${URLS.deplacementUrl}/${id}`;
 
       return this.http.delete<Deplacement>(url, httpOptions)
         .pipe(

@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 
 import { Employee } from './employee';
+import { URLS } from './urls';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'applicationt/json' })
@@ -14,14 +15,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class EmployeeService {
-    employeeUrl = 'http://localhost:8080/employee';
-
     constructor(
       private http: HttpClient
     ) { }
 
     getEmployees(page: number): Observable<Employee[]> {
-      const url = `${this.employeeUrl}/?page=${page}`;
+      const url = `${URLS.employeeUrl}/?page=${page}`;
 
       return this.http.get<Employee[]>(url)
         .pipe(
@@ -31,7 +30,7 @@ export class EmployeeService {
     }
 
     getEmployee(id: number): Observable<Employee> {
-      const url = `${this.employeeUrl}/${id}`;
+      const url = `${URLS.employeeUrl}/${id}`;
 
       return this.http.get<Employee>(url)
         .pipe(
@@ -41,7 +40,7 @@ export class EmployeeService {
     }
 
     addEmployee(employee: Employee): Observable<Employee> {
-      return this.http.post<Employee>(this.employeeUrl, employee, httpOptions)
+      return this.http.post<Employee>(URLS.employeeUrl, employee, httpOptions)
         .pipe(
           tap(_ => console.log(`Added employee w/ id=${employee.id}`)),
           catchError(this.handleError<Employee>())
@@ -49,7 +48,7 @@ export class EmployeeService {
     }
 
     updateEmployee(employee: Employee): Observable<any> {
-      return this.http.put<any>(this.employeeUrl, employee, httpOptions)
+      return this.http.put<any>(URLS.employeeUrl, employee, httpOptions)
         .pipe(
           tap(_ => console.log(`updated employee id=${employee.id}`)),
           catchError(this.handleError<any>())
@@ -58,7 +57,7 @@ export class EmployeeService {
 
     deleteEmployee(employee: Employee): Observable<Employee> {
       const id = employee.id;
-      const url = `${this.employeeUrl}/${id}`;
+      const url = `${URLS.employeeUrl}/${id}`;
 
       return this.http.delete<Employee>(url, httpOptions)
         .pipe(

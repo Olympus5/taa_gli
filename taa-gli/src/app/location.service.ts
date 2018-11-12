@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 
 import { Location } from './location';
+import { URLS } from './urls';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'applicationt/json' })
@@ -13,15 +14,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class LocationService {
-
-  locationUrl = 'http://localhost:8080/location';
-
   constructor(
     private http: HttpClient
   ) { }
 
    getLocations(page: number): Observable<Location[]> {
-     const url = `${this.locationUrl}/?page=${page}`;
+     const url = `${URLS.locationUrl}/?page=${page}`;
 
      return this.http.get<Location[]>(url)
        .pipe(
@@ -31,7 +29,7 @@ export class LocationService {
    }
 
    getLocation(id: number): Observable<Location> {
-     const url = `${this.locationUrl}/${id}`;
+     const url = `${URLS.locationUrl}/${id}`;
 
      return this.http.get<Location>(url)
        .pipe(
@@ -41,7 +39,7 @@ export class LocationService {
    }
 
    addLocation(location: Location): Observable<Location> {
-     return this.http.post<Location>(this.locationUrl, location, httpOptions)
+     return this.http.post<Location>(URLS.locationUrl, location, httpOptions)
        .pipe(
          tap(_ => console.log(`Added location w/ id=${location.id}`)),
          catchError(this.handleError<Location>())
@@ -49,7 +47,7 @@ export class LocationService {
    }
 
    updateLocation(location: Location): Observable<any> {
-     return this.http.put<any>(this.locationUrl, location, httpOptions)
+     return this.http.put<any>(URLS.locationUrl, location, httpOptions)
        .pipe(
          tap(_ => console.log(`updated location id=${location.id}`)),
          catchError(this.handleError<any>())
@@ -58,7 +56,7 @@ export class LocationService {
 
    deleteLocation(location: Location): Observable<Location> {
      const id = location.id;
-     const url = `${this.locationUrl}/${id}`;
+     const url = `${URLS.locationUrl}/${id}`;
 
      return this.http.delete<Location>(url, httpOptions)
        .pipe(
