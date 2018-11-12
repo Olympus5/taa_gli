@@ -22,8 +22,9 @@ export class AddressService {
   getAddresses(page: number): Observable<Address[]> {
     const url = `${URLS.addressUrl}/?page=${page}`;
 
-    return this.http.get<Address[]>(url)
+    return this.http.get<Object>(url)
     .pipe(
+      map((response: any) => response._embedded.address),
       tap(_ => console.log(`fetched addresses at page=${page}`)),
       catchError(this.handleError([]))
     );
@@ -32,8 +33,9 @@ export class AddressService {
   getAddressesEnterprise(id: number): Observable<Address[]> {
     const url = `${URLS.enterpriseUrl}/${id}/addresses`;
 
-    return this.http.get<Address[]>(url)
+    return this.http.get<Object>(url)
       .pipe(
+        map((response: any) => response._embedded.address),
         tap(_ => console.log(`fetched addresses enterprise id=${id}`)),
         catchError(this.handleError([]))
       );
