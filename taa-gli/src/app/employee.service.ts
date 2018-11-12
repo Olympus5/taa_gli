@@ -14,55 +14,55 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class EmployeeService {
-    enterpriseUrl = 'http://localhost:8080/enterprise';
+    employeeUrl = 'http://localhost:8080/employee';
 
     constructor(
       private http: HttpClient
     ) { }
 
     getEmployees(page: number): Observable<Employee[]> {
-      const url = `${this.enterpriseUrl}/?page=${page}`;
+      const url = `${this.employeeUrl}/?page=${page}`;
 
       return this.http.get<Employee[]>(url)
         .pipe(
-          tap(_ => `fetched enterprises at page=${page}`),
+          tap(_ => `fetched employees at page=${page}`),
           catchError(this.handleError([]))
         );
     }
 
     getEmployee(id: number): Observable<Employee> {
-      const url = `${this.enterpriseUrl}/${id}`;
+      const url = `${this.employeeUrl}/${id}`;
 
       return this.http.get<Employee>(url)
         .pipe(
-          tap(_ => `fetched enterprise id=${id}`),
+          tap(_ => `fetched employee id=${id}`),
           catchError(this.handleError<Employee>())
         );
     }
 
-    addEmployee(enterprise: Employee): Observable<Employee> {
-      return this.http.post<Employee>(this.enterpriseUrl, enterprise, httpOptions)
+    addEmployee(employee: Employee): Observable<Employee> {
+      return this.http.post<Employee>(this.employeeUrl, employee, httpOptions)
         .pipe(
-          tap(_ => console.log(`Added enterprise w/ id=${enterprise.id}`)),
+          tap(_ => console.log(`Added employee w/ id=${employee.id}`)),
           catchError(this.handleError<Employee>())
         );
     }
 
-    updateEmployee(enterprise: Employee): Observable<any> {
-      return this.http.put<any>(this.enterpriseUrl, enterprise, httpOptions)
+    updateEmployee(employee: Employee): Observable<any> {
+      return this.http.put<any>(this.employeeUrl, employee, httpOptions)
         .pipe(
-          tap(_ => console.log(`updated enterprise id=${enterprise.id}`)),
+          tap(_ => console.log(`updated employee id=${employee.id}`)),
           catchError(this.handleError<any>())
         )
     }
 
-    deleteEmployee(enterprise: Employee): Observable<Employee> {
-      const id = enterprise.id;
-      const url = `${this.enterpriseUrl}/${id}`;
+    deleteEmployee(employee: Employee): Observable<Employee> {
+      const id = employee.id;
+      const url = `${this.employeeUrl}/${id}`;
 
       return this.http.delete<Employee>(url, httpOptions)
         .pipe(
-          tap(_ => console.log(`delete enterprise id=${id}`)),
+          tap(_ => console.log(`delete employee id=${id}`)),
           catchError(this.handleError<Employee>())
         );
     }

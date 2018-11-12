@@ -13,56 +13,56 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class DeplacementService {
-    enterpriseUrl = 'http://localhost:8080/enterprise';
+    deplacementUrl = 'http://localhost:8080/deplacement';
 
     constructor(
       private http: HttpClient
     ) { }
 
-    getEnterprises(page: number): Observable<Enterprise[]> {
-      const url = `${this.enterpriseUrl}/?page=${page}`;
+    getDeplacements(page: number): Observable<Deplacement[]> {
+      const url = `${this.deplacementUrl}/?page=${page}`;
 
-      return this.http.get<Enterprise[]>(url)
+      return this.http.get<Deplacement[]>(url)
         .pipe(
-          tap(_ => `fetched enterprises at page=${page}`),
+          tap(_ => `fetched deplacements at page=${page}`),
           catchError(this.handleError([]))
         );
     }
 
-    getEnterprise(id: number): Observable<Enterprise> {
-      const url = `${this.enterpriseUrl}/${id}`;
+    getDeplacement(id: number): Observable<Deplacement> {
+      const url = `${this.deplacementUrl}/${id}`;
 
-      return this.http.get<Enterprise>(url)
+      return this.http.get<Deplacement>(url)
         .pipe(
-          tap(_ => `fetched enterprise id=${id}`),
-          catchError(this.handleError<Enterprise>())
+          tap(_ => `fetched deplacement id=${id}`),
+          catchError(this.handleError<Deplacement>())
         );
     }
 
-    addEnterprise(enterprise: Enterprise): Observable<Enterprise> {
-      return this.http.post<Enterprise>(this.enterpriseUrl, enterprise, httpOptions)
+    addDeplacement(deplacement: Deplacement): Observable<Deplacement> {
+      return this.http.post<Deplacement>(this.deplacementUrl, deplacement, httpOptions)
         .pipe(
-          tap(_ => console.log(`Added enterprise w/ id=${enterprise.id}`)),
-          catchError(this.handleError<Enterprise>())
+          tap(_ => console.log(`Added deplacement w/ id=${deplacement.id}`)),
+          catchError(this.handleError<Deplacement>())
         );
     }
 
-    updateEnterprise(enterprise: Enterprise): Observable<any> {
-      return this.http.put<any>(this.enterpriseUrl, enterprise, httpOptions)
+    updateDeplacement(deplacement: Deplacement): Observable<any> {
+      return this.http.put<any>(this.deplacementUrl, deplacement, httpOptions)
         .pipe(
-          tap(_ => console.log(`updated enterprise id=${enterprise.id}`)),
+          tap(_ => console.log(`updated deplacement id=${deplacement.id}`)),
           catchError(this.handleError<any>())
         )
     }
 
-    deleteEnterprise(enterprise: Enterprise): Observable<Enterprise> {
-      const id = enterprise.id;
-      const url = `${this.enterpriseUrl}/${id}`;
+    deleteDeplacement(deplacement: Deplacement): Observable<Deplacement> {
+      const id = deplacement.id;
+      const url = `${this.deplacementUrl}/${id}`;
 
-      return this.http.delete<Enterprise>(url, httpOptions)
+      return this.http.delete<Deplacement>(url, httpOptions)
         .pipe(
-          tap(_ => console.log(`delete enterprise id=${id}`)),
-          catchError(this.handleError<Enterprise>())
+          tap(_ => console.log(`delete deplacement id=${id}`)),
+          catchError(this.handleError<Deplacement>())
         );
     }
 
