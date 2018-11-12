@@ -1,10 +1,14 @@
 export class Address {
 	id: number;
-	enterprise: string;
-	streetName: string;
+	label: string;
+	street: string;
 	streetNumber: number;
 	zipCode: string;
 	city: string;
 	country: string;
 	formattedAddress: string;
+	location: string;
+	url: string;
+	placeId: string;
+	attachments: string[];
 }
